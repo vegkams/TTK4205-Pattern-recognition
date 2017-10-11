@@ -1,0 +1,41 @@
+function [ a, y_out ] = getVect( Training_set )
+
+% Splitt klasser i treningssettet for beregning av parametere
+Train_1 = [];
+Train_2 = [];
+for k = 1:size(Training_set,1)
+    if Training_set(k,1) == 1
+        Train_1 = [Train_1; Training_set(k,:)];
+    elseif Training_set(k,1) == 2
+        Train_2 = [Train_2; Training_set(k,:)];
+    end
+end
+
+b = []
+for k = 1:size(Training_set,1)
+    if Traning_set(k,1) == 1
+        b = [b; 1];
+    else
+        b = [b; -1];
+    end
+end
+
+c = size(Training_set,2);
+
+for k = 1:size(Training_set,1)
+    Y = [Y; ]
+
+
+y = []
+Y = []
+
+
+
+
+a = [];
+y_out = [];
+
+
+
+    
+end

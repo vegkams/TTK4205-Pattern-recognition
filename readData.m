@@ -58,6 +58,7 @@ for k = 1:size(Eval,1)
     C_min_error(Eval(k,1),class) = C_min_error(Eval(k,1),class) + 1;
 end
 
+<<<<<<< HEAD
 % Feilrate
 error_rate = (C_min_error(1,2)+C_min_error(2,1))/sum(sum(C_min_error));
 
@@ -80,6 +81,22 @@ for k = 1:size(Eval,1)
     end
     C_min_error_mse(Eval(k,1),class) = C_min_error_mse(Eval(k,1),class) + 1;
 end
+=======
+% Feilrate min feilrate
+error_rate_min_error = (C_min_error(1,2)+C_min_error(2,1))/sum(sum(C_min_error));
+
+% Nærmeste nabo klassifisering
+C_nn = zeros(2,2);
+for l = 1:size(Eval,1)
+    x = Eval(l,2:end);
+    class = nearestNeighbor(x, Train);
+    C_nn(Eval(l,1),class) = C_nn(Eval(l,1),class) + 1;
+end
+% Feilrate nn
+error_rate_nn = (C_nn(1,2)+C_nn(2,1))/sum(sum(C_nn));
+
+% Finn beste egenskapskombinasjon basert på nærmeste-nabo
+>>>>>>> 9227a123d7532b8c22383b622a4c7689fd21d17b
 
 
 
