@@ -63,7 +63,7 @@ error_rate = (C_min_error(1,2)+C_min_error(2,1))/sum(sum(C_min_error));
 
 %% Minste kvadraters metode
 
-a = getVect(Train);
+a = getVect(Train)
 
 
 % Forvirringsmatrise
@@ -71,8 +71,8 @@ C_min_error_mse = zeros(2,2);
 
 % Evaluer treningssettet, lag forvirringsmatrise for minimum feilrate
 for k = 1:size(Eval,1)
-    x = Eval(k,2:end);
-    result = a*[1 x]
+    x = Eval(k,2:end)';
+    result = a*[1 Eval(k)]
     if result >= 0
         class = 1;
     else
