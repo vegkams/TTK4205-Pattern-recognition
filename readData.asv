@@ -42,22 +42,14 @@ g_1 = @(x)x'*W_1*x+w_1'*x + w_10;
 g_2 = @(x)x'*W_2*x+w_2'*x + w_20;
 
 % Forvirringsmatrise
-C_min_error = zeros(2,2);
+C = zeros(2,2);
 
-% Evaluer treningssettet, lag forvirringsmatrise for minimum feilrate
 for k = 1:size(Eval,1)
     x = Eval(k,2:end)';
     result = g_1(x)-g_2(x);
-    if result >= 0
-        class = 1;
-    else
-        class = 2;
-    end
-    C_min_error(Eval(k,1),class) = C_min_error(Eval(k,1),class) + 1;
+    if result
 end
 
-% Feilrate
-error_rate = (C_min_error(1,2)+C_min_error(2,1))/sum(sum(C_min_error));
 
 
 
