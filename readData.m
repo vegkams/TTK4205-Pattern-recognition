@@ -36,7 +36,9 @@ for j = 1:size(D,1)
     end
 end
 
-%% Minimum feilrate klassifikatoren 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Minimum feilrate klassifikatoren 
 
 [W_1,W_2,w_1,w_2,w_10,w_20] = getParams(Train);
 
@@ -58,11 +60,13 @@ for k = 1:size(Eval,1)
     C_min_error(Eval(k,1),class) = C_min_error(Eval(k,1),class) + 1;
 end
 
-<<<<<<< HEAD
 % Feilrate
 error_rate = (C_min_error(1,2)+C_min_error(2,1))/sum(sum(C_min_error));
 
-%% Minste kvadraters metode
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Minste kvadraters metode
 
 a = getVect(Train);
 
@@ -73,7 +77,7 @@ C_min_error_mse = zeros(2,2);
 % Evaluer treningssettet, lag forvirringsmatrise for minimum feilrate
 for k = 1:size(Eval,1)
     x = Eval(k,2:end);
-    result = a*[1 x]
+    result = a*[1 x];
     if result >= 0
         class = 1;
     else
@@ -81,11 +85,16 @@ for k = 1:size(Eval,1)
     end
     C_min_error_mse(Eval(k,1),class) = C_min_error_mse(Eval(k,1),class) + 1;
 end
-=======
+
+C_min_error_mse
+
 % Feilrate min feilrate
 error_rate_min_error = (C_min_error(1,2)+C_min_error(2,1))/sum(sum(C_min_error));
 
-% NÊrmeste nabo klassifisering
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% N√¶rmeste nabo klassifisering
+
 C_nn = zeros(2,2);
 for l = 1:size(Eval,1)
     x = Eval(l,2:end);
@@ -95,8 +104,7 @@ end
 % Feilrate nn
 error_rate_nn = (C_nn(1,2)+C_nn(2,1))/sum(sum(C_nn));
 
-% Finn beste egenskapskombinasjon basert pÂ nÊrmeste-nabo
->>>>>>> 9227a123d7532b8c22383b622a4c7689fd21d17b
+% Finn beste egenskapskombinasjon basert p√• n√¶rmeste-nabo
 
 
 
