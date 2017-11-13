@@ -22,7 +22,7 @@ for k = 1:size(Training_set,1)
     else
         b = [b; -1];
     end
-    Y = [Y; 1, Training_set(k,2:size(Training_set,2))]
+    Y = [Y; 1, Training_set(k,2:size(Training_set,2))];
 end
 
 a = inv(Y'*Y)*Y'*b;
