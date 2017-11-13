@@ -1,5 +1,5 @@
-function [ W_1, W_2, w_1, w_2, w_10, w_20 ] = getParams( Training_set )
-%getParams Beregner parametere til minimum-feilrate klassifikatoren
+function [g_1, g_2] = minErrorRate( Training_set )
+%leastSquares minimum-feilrate klassifikatoren
 %   Detailed explanation goes here
 
 
@@ -34,4 +34,8 @@ w_1 = inv(Sigma_hat_1)*mu_hat_1';
 w_2 = inv(Sigma_hat_2)*mu_hat_2';
 w_10 = -(1/2)*mu_hat_1*inv(Sigma_hat_1)*mu_hat_1' - (1/2)*log(det(Sigma_hat_1)) + log(P_1);
 w_20 = -(1/2)*mu_hat_2*inv(Sigma_hat_2)*mu_hat_2' - (1/2)*log(det(Sigma_hat_2)) + log(P_2);
+
+g_1 = @(x)x'*W_1*x+w_1'*x + w_10;
+g_2 = @(x)x'*W_2*x+w_2'*x + w_20;
+
 end

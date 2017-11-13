@@ -28,14 +28,14 @@ xcomb = 2^(dim(2)-1)-1;
 
 Pe_vec(1:dim(2)-1,1) = 1;
 C_nn = zeros(2,2);
-% Bruk binær-indeksing for hver mulige kombinasjon av egenskaper
+% Bruk binï¿½r-indeksing for hver mulige kombinasjon av egenskaper
 for m = 1:xcomb
     binXcol       = bitget(m,1:(size(Train,2)-1));
     index         = logical([1 binXcol]);
     temp_eval     = Eval(:,index);
     temp_train    = Train(:,index);
     d             = sum(index) - 1;
-    % Evaluer dette delsettet med nærmeste nabo
+    % Evaluer dette delsettet med nï¿½rmeste nabo
     for k = 1:size(temp_eval,1)
         x = temp_eval(k,2:end);
         class = nearestNeighbor(x, temp_train);
@@ -48,20 +48,19 @@ for m = 1:xcomb
     end
 end
 clear C_nn
-%% Evaluer hver klassifikator basert på beste egenskapskombo
+%% Evaluer hver klassifikator basert pï¿½ beste egenskapskombo
 C_min_error = []; C_nn = []; C_mse = [];
 Pe_min_error =[]; Pe_nn = []; Pe_mse = [];
 for i = 1:size(Xcol_vec,2)
-    % Hent ut korrekt egenskapskombinasjon basert på beregningene i forrige
+    % Hent ut korrekt egenskapskombinasjon basert pï¿½ beregningene i forrige
     % celle
     logical_index = logical([1 bitget(Xcol_vec(i),1:4)]);
     x_train = Train(:,logical_index);
     x_eval = Eval(:, logical_index);
     
     % Minimum feilrate klassifikator
-    [W_1,W_2,w_1,w_2,w_10,w_20] = getParams(x_train);
-    g_1 = @(x)x'*W_1*x+w_1'*x + w_10;
-    g_2 = @(x)x'*W_2*x+w_2'*x + w_20;
+    [g_1,g_2] = minErrorRate(x_train);
+    
     % Evaluer treningssettet, lag forvirringsmatrise for minimum feilrate
     C_min_error_temp = zeros(2,2);
     for k = 1:size(x_eval,1)
@@ -81,7 +80,7 @@ for i = 1:size(Xcol_vec,2)
     
     
     % Minste kvadraters metode
-    a = getVect(x_train);
+    a = leastSquares(x_train);
     % Forvirringsmatrise
     C_mse_temp = zeros(2,2);
     % Evaluer treningssettet, lag forvirringsmatrise for minimum feilrate
@@ -98,7 +97,7 @@ for i = 1:size(Xcol_vec,2)
     Pe_mse = [Pe_mse (C_mse_temp(1,2)+C_mse_temp(2,1))/sum(sum(C_mse_temp))];
     C_mse = [C_mse C_mse_temp];
     
-    % Nærmeste nabo klassifikator
+    % Nï¿½rmeste nabo klassifikator
     C_nn_temp = zeros(2,2);
     for k = 1:size(x_eval,1)
         x = x_eval(k,2:end);
