@@ -5,9 +5,8 @@
 clear
 clc
 close all;
-load ds-2.txt;
-D = ds_2;
-dataset = 2;
+load ds-3.txt;
+D = ds_3;
 %filename = "ds-2.txt";
 %filename = "ds-3.txt";
 
@@ -161,19 +160,19 @@ for n = 1:2:size(C_nn,2)
     title(String,'FontSize', 14);
 end
 
-j = 1
+
 for n = 1:length(Pe_nn)
     
     plotform_C =...
-       [Pe_min_error(n); Pe_mse(n); Pe_nn(n)];
+       [Pe_min_error(n) Pe_mse(n) Pe_nn(n)];
 
     
-    figure(i+j)
+    figure(i)
     
     String = [];
     txt = '        x_d combination: ';
-    pe = ['P(e) = ', num2str(Pe_vec(j),3)];
-    temp = dec2bin(Xcol_vec(j),length(Xcol_vec));
+    pe = ['P(e) = ', num2str(Pe_vec(i),3)];
+    temp = dec2bin(Xcol_vec(i),length(Xcol_vec));
     for m=1:length(Xcol_vec)
         if temp(length(Xcol_vec)+1-m)=='1'
             if m == 1
@@ -192,34 +191,19 @@ for n = 1:length(Pe_nn)
            String = [String, str]; 
         end
     end
-    j = j + 1;
+    i = i + 1;
     String = [pe, txt, String];
-    cat = categorical({'P(e) Min Error','P(e) Least Square','P(e) Nearest Neighbor'});
-    bar(cat, plotform_C,0.4, 'grouped')
+    cat = categorical({'True class 1','False class 1','False class 2',...
+        'True class 2'});
+    bar(cat, plotform_C, 'grouped')
     grid on
+    legend({'Min error rate','Least square','Nearest neighbor'},...
+        'Location','northwest','FontSize', 11)
     title(String,'FontSize', 14);
 end
 
 
-Class1 = [];
-Class2 = [];
-for j = 1:size(D,1)
-    if D(j,1)==1
-        Class1 = [Class1; D(j,2:end)];
-    else
-        Class2 = [Class2; D(j,2:end)];
-    end
-end
 
-if dataset == 2
-    figure
-    scatter3(Class1(:,1),Class1(:,2),Class1(:,3),10,'r');hold on
-    scatter3(Class2(:,1),Class2(:,2),Class2(:,3),10,'b');hold off
-    title('Scatter Plot of dataset 2')
-    xlabel('x1')
-    ylabel('x2')
-    zlabel('x3')
-end
 
 
 
