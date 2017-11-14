@@ -4,9 +4,9 @@
 
 clear
 clc
- 
-load ds-3.txt;
-D = ds_3;
+close all;
+load ds-1.txt;
+D = ds_1;
 %filename = "ds-2.txt";
 %filename = "ds-3.txt";
 
@@ -35,6 +35,8 @@ for m = 1:xcomb
     temp_eval     = Eval(:,index);
     temp_train    = Train(:,index);
     d             = sum(index) - 1;
+    %disp(logical(binXcol))
+    %disp(bin2dec(num2str(binXcol)))
     % Evaluer dette delsettet med n�rmeste nabo
     for k = 1:size(temp_eval,1)
         x = temp_eval(k,2:end);
@@ -43,8 +45,11 @@ for m = 1:xcomb
     end
     Pe = (C_nn(1,2)+C_nn(2,1))/sum(sum(C_nn));
     if Pe < Pe_vec(d)
+        %disp(index)
+        %disp(Pe)
+        %disp(bin2dec(num2str(fliplr(binXcol))))
         Pe_vec(d) = Pe; % save minimum error rate
-        Xcol_vec(d) = bin2dec(num2str(binXcol)); % save combination of x colums [x4,x3,x2,c1]
+        Xcol_vec(d) = bin2dec(num2str(fliplr(binXcol))); % save combination of x colums [x4,x3,x2,c1]
     end
 end
 clear C_nn
@@ -54,10 +59,10 @@ Pe_min_error =[]; Pe_nn = []; Pe_mse = [];
 for i = 1:size(Xcol_vec,2)
     % Hent ut korrekt egenskapskombinasjon basert p� beregningene i forrige
     % celle
-    logical_index = logical([1 bitget(Xcol_vec(i),1:4)]);
+    logical_index = logical([1 bitget(Xcol_vec(i),1:(size(Train,2)-1))]);
+    disp(logical_index)
     x_train = Train(:,logical_index);
     x_eval = Eval(:, logical_index);
-    
     % Minimum feilrate klassifikator
     [g_1,g_2] = minErrorRate(x_train);
     
@@ -83,7 +88,7 @@ for i = 1:size(Xcol_vec,2)
     a = leastSquares(x_train);
     % Forvirringsmatrise
     C_mse_temp = zeros(2,2);
-    % Evaluer treningssettet, lag forvirringsmatrise for minimum feilrate
+    % Evaluer treningssettet, lag forvirringsmatrise for mse
     for k = 1:size(x_eval,1)
         x = x_eval(k,2:end);
         result = a'*[1 x]';
